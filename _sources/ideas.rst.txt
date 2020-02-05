@@ -1,0 +1,407 @@
+
+.. _gsoc-ideas:
+
+Project Ideas List
+==================
+
+This is the project idea list for Google Summer of Code with Chapel.
+
+The project ideas in this list have been compiled by Chapel contributors.
+Students may submit proposals based on existing ideas here or new ideas
+altogether.
+
+.. note::
+    If you are interested in applying for Chapel's Google Summer of Code 2020,
+    start here:
+
+    - :ref:`gsoc-apply`
+
+.. contents::
+
+Libraries and Applications
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Iterator Library
+----------------
+
+:Description:
+  The Chapel language supports both serial and parallel iterators. It would be
+  useful to provide a toolkit of common serial and parallel iterators to users
+  through a library. Python’s `itertools library`_ would make a good
+  reference for target functionality as well as performance comparisons.
+
+:Expected Results:
+  An iterator library that implements some subset of Python’s itertools library
+  in Chapel. This project could take a breadth-first approach or depth-first
+  approach, where depth would involve optimizing performance and implementing
+  parallel iterators. The stretch goal is to document and propose design
+  solutions to constraints in Chapel iterators.
+
+:Skills Required:
+  - Will need to know or learn Chapel programming language
+  - Experience with another language that supports iterators
+
+:Difficulty: 1/7
+
+:Mentor(s): `Ben Albrecht`_, `Krishna Kumar Dey`_
+
+.. _itertools library: https://docs.python.org/3.7/library/itertools.html
+
+Utility Modules
+---------------
+
+:Description:
+  Develop some utility modules missing from Chapel’s standard library:
+
+  1. Environment variable interface module
+
+    - Implement an interface for reading, writing, and searching environment
+      variables.
+    - Chapel’s environment variable interface should be locale-aware.
+    - There is some discussion in the `Env module issue`_.
+
+  2. Shell lexer module
+
+    - Implement a simple lexer that support shell-style quoting, commenting,
+      and escaping.
+    - There is some discussion in the `Shlex module issue`_.
+
+:Expected Results:
+  An *Env* module and *Shlex* module contributed to the Chapel repository,
+  including design review.
+
+:Skills Required:
+  - Will need to know or learn Chapel programming language
+
+:Difficulty: 1/7
+
+:Mentor(s): `Krishna Kumar Dey`_, `Ben Albrecht`_
+
+.. _Env module issue: https://github.com/chapel-lang/chapel/issues/5939
+.. _Shlex module issue: https://github.com/chapel-lang/chapel/issues/11489
+
+Container for Different Data Structures in Chapel
+-------------------------------------------------
+
+:Description:
+  Chapel Language currently supports a lot of data structures as standard
+  modules and packages such as `List`_, `Set`_, `Map`_ `LinkedList`_,
+  `Bag`_, `Stack`_, `Queue`_, and `Deque`_.  This project aims to add more data
+  structures to this list.
+
+:Expected Result:
+  Implement several sequential data structures, including:
+
+      - Unrolled Linked List
+      - Search Tree
+      - Skip List
+      - Interval/Range Tree
+
+  Publish these data structures as mason packages
+
+:Skills Required:
+  Good grasp over data structures, proficient in some programming language and
+  able to learn Chapel.
+
+:Difficulty: 2/7
+
+:Mentor(s): `Krishna Kumar Dey`_
+
+.. _List: https://chapel-lang.org/docs/modules/standard/List.html
+.. _Set: https://chapel-lang.org/docs/modules/standard/Set.html
+.. _Map: https://chapel-lang.org/docs/modules/standard/Map.html
+.. _LinkedList: https://chapel-lang.org/docs/modules/standard/LinkedLists.html
+.. _Bag: https://chapel-lang.org/docs/modules/packages/DistributedBag.html
+.. _Stack: https://chapel-lang.org/docs/modules/packages/LockFreeStack.html
+.. _Queue: https://chapel-lang.org/docs/modules/packages/LockFreeQueue.html
+.. _Deque: https://chapel-lang.org/docs/modules/packages/DistributedDeque.html
+
+I/O Performance
+---------------
+
+:Description:
+  Investigate performance of I/O routines in Chapel, and make improvements. The
+  Chapel language includes an I/O system in its standard library. While this I/O
+  system is flexible and capable, to date, little work has been done to analyze
+  its performance and recommend usage. In addition, it is missing some features
+  that would work well with Chapel’s support for parallel computing - in
+  particular a way to read all of the lines in a file in parallel (see the
+  `parallel file.lines() issue`_).
+
+:Expected Results:
+  This project will begin by studying I/O performance in Chapel. Work will
+  involve writing test programs to measure performance and comparing performance
+  to other languages (such as C and Python).
+
+  A second phase of the project will add to and improve the implementation of the
+  I/O routines with performance in mind. This will include implementing the
+  parallel file.lines() feature described above and also address shortcomings
+  identified in the first phase.
+
+  The final phase of the project will be to write a user-facing guide to writing
+  performant I/O code in Chapel.
+
+:Skills Required:
+  - Proficient in C or C++
+  - Experience with I/O operations such as fread, read, and mmap in C
+  - Will need to know or learn Chapel programming language
+
+:Difficulty: 3/7
+
+:Mentor(s): `Michael Ferguson`_, `Lydia Duncan`_ (backup)
+
+.. _parallel file.lines() issue: https://github.com/chapel-lang/chapel/issues/4959
+
+Distributed Online Storage for Serialized Data
+----------------------------------------------
+
+:Description:
+  The Chapel language has excellent support for distributing and accessing large
+  amounts of data over many locales, including arrays of strings and custom
+  objects.  A program/library that can accept and return serialized data from
+  either external or internal programs would be useful for applications that must
+  pass around substantial quantities of data with no specified type. Redis and
+  KeyDB are examples of prior work in this area.
+
+:Expected Results:
+  A library (or optionally, program) that can store data in a distributed array,
+  preferably data that has been serialized with a commonly used accessible scheme
+  such as protocol buffers.  The library could be used in other Chapel programs
+  to lower the barrier to entry to writing distributed Chapel code, whereas the
+  program approach could leverage the library and use a protocol such as ZMQ to
+  store/distribute/retrieve data on demand.
+
+:Skills Required:
+  - Will need to know or learn Chapel programming language
+  - Will need to become somewhat familiar with serialization schemes.
+  - Stretch goal would require understanding of ZMQ and inter-process
+    communication.
+
+:Difficulty: 4/7
+
+:Mentor(s): `Audrey Pratt`_, `Lydia Duncan`_ (backup)
+
+Libraries for Web Services
+--------------------------
+
+:Description:
+
+  Since many modern applications involve web services, we would like to be able
+  to write some web services in Chapel. Therefore this project is to create a
+  library to support writing web services in Chapel. This will allow Chapel to
+  fit into more use cases and also enable tools such as a web-based execution
+  monitor. While the focus of this project will be on building a library that
+  allows Chapel programs implement web services, it will also involve creating
+  libraries to create a web server in Chapel and libraries to support socket
+  programming in Chapel.
+
+:Expected Results:
+
+  An implementation of a library enabling REST web services to be written in
+  Chapel and that supports communication with JavaScript programs using
+  WebSockets. Since programs using WebSockets have the ability to communicate
+  any data in a streaming manner, the WebSockets support will involve creating
+  a sockets support library. The sockets support library should be designed in
+  a manner that allows for concurrency and parallelism. Logging,
+  authentication, https support, and error handling are additional features to
+  consider.
+
+:Skills Required:
+  - Familiarity with a few web services libraries in other languages
+  - Experience using web services and WebSockets from JavaScript
+  - Experience with sockets in some language
+  - Will need to know or learn Chapel programming language
+
+:Difficulty: 5/7
+
+:Mentor(s): `Michael Ferguson`_ , `Krishna Kumar Dey`_
+
+Physics Simulation/MD Engine in Chapel
+--------------------------------------
+
+:Description:
+
+  While there are a few Molecular Dynamics engines that are scalable (such as
+  LAMMPS), they tend to be written in C++ and make use of scaling technologies
+  like MPI.  This increases the barrier to entry to contributing to
+  computational physics/biophysics code/methods.  Alternatively, an engine
+  written in Chapel would massively reduce the overhead required to scale,
+  allowing large scale (or an ensemble of) simulations written in code that is
+  easier to understand and modify.  In addition, the use of Chapel’s
+  distributed data structures would allow for running simulations at scales
+  heretofore unheard of.
+
+:Expected Results:
+
+  A Chapel program that is able to take a system of point particles and apply
+  an energy function to calculate how the system moves in time.  This would be
+  solid foundational work, and a stretch goal would be writing the code
+  necessary to run a system too large to fit on one compute node.
+
+:Skills Required:
+  - Strong foundation in Newtonian physics and mathematics at the calculus level.
+  - Desire to learn how numerical simulations are performed.
+  - Will need to know or learn Chapel programming language
+
+:Difficulty: 5/7
+
+:Mentor(s): `Audrey Pratt`_, `Ben Albrecht`_ (backup)
+
+Distributed Linear Algebra
+--------------------------
+
+:Description:
+
+  The Chapel programming language’s Linear Algebra library primarily relies on
+  LAPACK and BLAS, which adds an additional dependency and only works on
+  shared-memory matrices and vectors. This project aims to provide a native
+  shared-memory and distributed Chapel implementation for the Linear Algebra
+  operations available in the LinearAlgebra package. The effort will include
+  both sparse and dense versions of core linear algebra operations.
+
+:Expected Results:
+
+  Contribution of shared-memory and distributed linear algebra operations. A
+  naive implementation of dense linear algebra is the minimum required, with
+  optimizations to avoid redundant and unnecessary communications as a target
+  goal, along with benchmarks to measure the performance of said
+  implementation.
+
+:Skills required:
+  - Strong linear algebra background (to lead discussion)
+  - Will need to know or learn Chapel programming language
+
+:Difficulty: 7/7
+
+:Mentor(s): `Garvit Dewan`_ (Primary), `Louis Jenkins`_ (backup)
+
+
+Parser
+~~~~~~
+
+A Better Parser
+---------------
+
+:Description:
+  Implement an improved parser for the Chapel language. An improved parser can:
+  Provide better error messages instead of “syntax error”
+  Provide parse trees to tools besides the Chapel compiler
+  Support parsing in more interactive settings such as code completion in editor or in an interpreter
+
+  Note that the Chapel compiler currently has a lex/bison parser with included
+  actions that are relevant only to the current Chapel compiler. See also
+  the `Language Server`_, `Linter`_, and `lint flag`_ issues as well as
+  `antlr.org`_.
+
+:Expected Results:
+
+  A new parser for the Chapel programming language written in ANTLR or another
+  agreed-upon parsing strategy. Work on the parser will be done incrementally
+  by developing rules to parse more and more complex example programs. By the
+  end of the project, the parser should be able to parse all of the Chapel test
+  suite source code that compiles today. A stretch goal would be to use the
+  parser to create a linter or code completion tool for Chapel.
+
+:Skills Required:
+  - Experience with compilers, in particular knowledge of context-free grammars.
+  - Proficient in C++
+  - Will need to know or learn Chapel programming language
+
+
+:Difficulty: 5/7
+
+:Mentor(s): `Michael Ferguson`_, `Lydia Duncan`_ (backup), `Przemek Leśniak`_ (backup)
+
+.. _Language Server: https://github.com/chapel-lang/chapel/issues/7295
+.. _Linter: https://github.com/chapel-lang/chapel/issues/9003
+.. _lint flag: https://github.com/chapel-lang/chapel/issues/9014
+.. _antlr.org: https://www.antlr.org/
+
+Language Interoperability
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Call Python code from Chapel
+----------------------------
+
+:Description:
+  Currently, it is possible to compile Chapel programs as Python libraries to
+  leverage the power of Chapel within a scripted language.  However,
+  multiprocessing becomes more difficult in this paradigm, and the control of
+  program execution rests in Python.  Alternatively, Python code could be
+  called from Chapel, allowing the program to be more scriptable while allowing
+  Chapel to do all the heavy lifting regarding data distribution and
+  multiprocessing.  Some initial work has been done on embedding the Python
+  interpreter, showing this as feasible.
+
+:Expected Results:
+  A library that allows for calling Python code/functions and using the
+  returned values within Chapel.  As a stretch goal, it would be nice to write
+  a companion Python lib (in C) that can reach back into Chapel, on demand, and
+  return data.  In addition, the library would ideally work with arbitrary
+  types of structs (as all objects in Python are represented as structs of type
+  *PyObject*, or structs which have inherited from said structure (and can be
+  used as *PyObjects*)).
+
+:Skills Required:
+  - Will need to know or learn Chapel programming language
+  - Knowledge of C, or desire to learn.
+  - Some desire to read and understand CPython and how modules are written.
+
+:Difficulty: 6/7
+
+:Mentor(s): `Audrey Pratt`_, `Lydia Duncan`_ (backup)
+
+C++ Interoperation
+------------------
+
+:Description:
+  Chapel already has support for interoperation between Chapel and C, Python,
+  and Fortran. This project will investigate interoperation between Chapel and
+  C++.
+
+  Interoperation between Chapel and C++ will build upon existing work for
+  interoperation between Chapel and C. This work enables extern blocks - in
+  which C code can be embedded within a Chapel program - and makes use of the
+  clang compiler.
+
+:Expected Results:
+  The student will need to develop solutions to interoperability challenges
+  with C++. Here is a list of C++ features that will require specific
+  attention:
+
+      - name mangling
+      - method calls
+      - RAII / local variable destruction
+      - function overloading
+      - function templates
+
+  The expected result is that C++ functions and methods will be callable on C++
+  types that are available within Chapel, and that the destructor for local
+  variables of C++ type will be called at the appropriate time. Supporting C++
+  templates over Chapel types and operator overloading are stretch goals.
+
+
+:Skills Required:
+  - Experience with clang internals and implementation
+  - In-depth knowledge C++
+  - Will need to know or learn Chapel programming language
+
+
+:Difficulty: 7/7
+
+:Mentor(s): `Michael Ferguson`_, `Lydia Duncan`_ (backup)
+
+
+.. Profile pages ..
+
+.. _Audrey Pratt: https://github.com/astatide
+.. _Ben Albrecht: https://github.com/ben-albrecht
+.. _Engin Kayraklioglu: https://github.com/e-kayrakli
+.. _Garvit Dewan: https://github.com/dgarvit
+.. _Krishna Kumar Dey: https://github.com/krishnadey30
+.. _Louis Jenkins: https://louisjenkinscs.github.io/
+.. _Lydia Duncan: https://github.com/lydia-duncan
+.. _Michael Ferguson: https://github.com/mppf
+.. _Przemek Leśniak: https://github.com/coodie
+.. _Sam Partee: https://partee.io/
+
